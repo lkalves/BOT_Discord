@@ -6,5 +6,5 @@ from time import sleep
 webhook = DiscordWebhook(
     url='https://discord.com/api/webhooks/938510068352180255/2aolYlPcByMMnHNHyBtzMoKyhkvWvIWhMeD8atto4IaIOxVNqB0HVFh7uMLIbHF-oraw', content='sou gay e chupo pau')
 sent_webhook = webhook.execute()
-sleep(10)
+sleep(1)
 webhook.delete(sent_webhook)

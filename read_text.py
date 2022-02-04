@@ -1,4 +1,4 @@
-
+import pyttsx3
 
 # Inicializa a engine
 engine = pyttsx3.init()
