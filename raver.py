@@ -1,25 +1,31 @@
-from datetime import datetime
-from discord.ext import commands, tasks
+from discord.ext import commands
+from discord.ext.commands import Bot
+from discord.voice_client import VoiceClient
+from numpy import empty
 import pyttsx3
-
-bot = commands.Bot("!")
 
 engine = pyttsx3.init()
 engine.setProperty("voice", "portugal")
 engine.setProperty("rate", 180)
-
 engine.runAndWait()
+
+
+bot = commands.Bot("!")
 
 
 @bot.event
 async def on_ready():
     print(f'Botzada do Aloes {bot.user}\nDoubleG *Copyright*')
-    # current_time.start()
 
 
 @bot.event
 async def on_message(message):
-    if message.channel.name == 'canal-do-alan':
+    if message.channel.name == 'bot':
+        connected = message.author.voice
+        # xablau = type(VoiceClient.is_connected())
+        if connected:
+            xablau = await connected.channel.connect()
+
         # msg = 'Quem falou foi {0.author.name}: {0.content}'.format(message)
         if not message.content.startswith('Data atual'):
             print(f'{message.author}: {message.content}')
@@ -30,12 +36,11 @@ async def on_message(message):
             print('Não permitido')
 
 
-@tasks.loop(minutes=30)
-async def current_time():
-    now = datetime.now()
-    now = now.strftime("%d/%m/%Y\nHoras: %H:%M:%S")
-    channel = bot.get_channel(938487271701766146)
-    await channel.send('Data atual: ' + now)
+# @bot.command(name='conectar')
+# async def join(self, ctx):
+#     connected = ctx.author.voice
+#     if connected:
+#         await connected.channel.connect()
 
 
 bot.run("OTM4Nzg1ODU4ODU1Nzk2NzY2.YfvWdg.34gNUwxBfwwA8IRsf0YwesolA-o")
