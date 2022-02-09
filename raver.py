@@ -1,15 +1,15 @@
 from discord.ext import commands
-from discord.ext.commands import Bot
-from discord.voice_client import VoiceClient
+# from discord.ext.commands import Bot
+# from discord.voice_client import VoiceClient
 from numpy import empty
 import pyttsx3
 
 engine = pyttsx3.init()
-engine.setProperty("voice", "portugal")
+engine.setProperty("voice", "brazil")
 engine.setProperty("rate", 180)
 engine.runAndWait()
 
-AUTHOR='gamaitalo'
+AUTHOR = 'LK'
 
 bot = commands.Bot("!")
 
@@ -28,31 +28,31 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-    if message.channel.name == 'bot' and message.author.name == AUTHOR and message.content == '!disconnect':
-        message.channel.disconnect()
+    # if message.channel.name == 'bot' and message.author.name == AUTHOR and message.content == '!leave':
+    #     message.author.voice.channel.disconnect()
 
     if message.channel.name == 'bot' and message.author.name == AUTHOR:
         if not is_connected(message.author.voice.channel):
-            xablau = await message.author.voice.channel.connect()
-
+            await message.author.voice.channel.connect()
 
         # msg = 'Quem falou foi {0.author.name}: {0.content}'.format(message)
         if not message.content.startswith('Data atual'):
             print(f'{message.author}: {message.content}')
             engine.say(message.content)
             engine.runAndWait()
-
         else:
             print('Não permitido')
 
 
-# @bot.command(name='conectar')
-# async def join(self, ctx):
-#     connected = ctx.author.voice
-#     if connected:
-#         await connected.channel.connect()
-
-
+@bot.command(name="leave", pass_context=True)
+async def leave(ctx):
+    server = ctx.message.server
+    voice_client = bot.voice_client_in(server)
+    if voice_client:
+        await voice_client.disconnect()
+        print("Bot left the voice channel")
+    else:
+        print("Bot was not in channel")
 
 
 def main():
@@ -61,4 +61,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
