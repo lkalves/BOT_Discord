@@ -8,7 +8,7 @@ engine.setProperty("voice", "brazil")
 engine.setProperty("rate", 180)
 engine.runAndWait()
 
-AUTHOR = 'gamaitalo'
+AUTHOR = 'LK'
 TOKEN = "OTM4Nzg1ODU4ODU1Nzk2NzY2.YfvWdg.34gNUwxBfwwA8IRsf0YwesolA-o"
 
 mutex = Lock()
