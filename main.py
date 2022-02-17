@@ -15,6 +15,8 @@ TOKEN = "OTM4Nzg1ODU4ODU1Nzk2NzY2.YfvWdg.34gNUwxBfwwA8IRsf0YwesolA-o"
 
 mutex = Lock()
 bot = commands.Bot("!")
+f = 'sou lindo'
+# rafao
 
 
 def is_connected(channel):
