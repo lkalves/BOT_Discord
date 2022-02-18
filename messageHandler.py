@@ -34,7 +34,6 @@ def removeUserID(texto):
         id = b[0]
         result = a[0] + 'Claudinho' + b[1]
         removeUserID(result)
-        return id
     else:
         return texto
 
