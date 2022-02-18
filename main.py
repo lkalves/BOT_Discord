@@ -2,6 +2,7 @@ from discord.ext import commands
 import discord
 import pyttsx3
 from multiprocessing import Lock
+from messageHandler import verifyUser
 
 
 engine = pyttsx3.init()
@@ -15,8 +16,6 @@ TOKEN = "OTM4Nzg1ODU4ODU1Nzk2NzY2.YfvWdg.34gNUwxBfwwA8IRsf0YwesolA-o"
 
 mutex = Lock()
 bot = commands.Bot("!")
-f = 'sou lindo'
-# rafao
 
 
 def is_connected(channel):
@@ -38,6 +37,7 @@ async def on_message(message):
             if not is_connected(message.author.voice.channel):
                 bot.vc = await message.author.voice.channel.connect()
             print(f'{message.author}: {message.content}')
+            verifyUser(message.content)
             engine.save_to_file(message.content, 'test.webm')
             engine.runAndWait()
             source = await discord.FFmpegOpusAudio.from_probe(executable='D:\\DEV\\Projetos\\Webhook_Discord\\ffmpeg\\ffmpeg.exe', source='test.webm')
