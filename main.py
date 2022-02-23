@@ -38,9 +38,9 @@ async def on_message(message):
             print(f'{message.author}: {message.content}')
             verifyUser(message.content)
             removeID = removeUserID(message.content)
-            engine.save_to_file(removeID, 'audio\\test.mp3')
+            engine.save_to_file(removeID, 'audio/test.mp3')
             engine.runAndWait()
-            source = await discord.FFmpegOpusAudio.from_probe(executable='D:\\DEV\\Projetos\\BOT_Discord\\tools\\ffmpeg\\ffmpeg.exe', source='audio\\test.mp3')
+            source = await discord.FFmpegOpusAudio.from_probe(executable='tools/ffmpeg/ffmpeg.exe', source='audio/test.mp3')
             bot.vc.play(source)
 
 
