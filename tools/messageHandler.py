@@ -26,16 +26,15 @@ def removeUserID(texto):
         # Metodo que tira o ID
         nome_lista = [('270928429925269518', 'LK'), ('268198611941195776', 'Rafão'),
                       ('107332797332508672', 'Dashtail'), ('109427358162817024', 'Pseudão')]
+
         a = texto.split('<@!')
         b = a[1].split('>')
         id = b[0]
-
         dicio = dict(nome_lista)
         search = dicio.get(id, 'Não encontrado')
-        print(search)
         if search != 'Não encontrado':
             result = a[0] + '@'+search + b[1]
-        removeUserID(result)
+        return removeUserID(result)
     else:
         return texto
 
@@ -46,6 +45,7 @@ def verifyUser(texto):
         removeUserID(texto)
     else:
         print('Não contém ID')
+        return texto
 
 
 if __name__ == "__main__":

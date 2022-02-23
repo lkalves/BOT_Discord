@@ -2,7 +2,7 @@ from discord.ext import commands
 import discord
 import pyttsx3
 from multiprocessing import Lock
-from tools.messageHandler import verifyUser
+from tools.messageHandler import verifyUser, removeUserID
 
 engine = pyttsx3.init()
 engine.setProperty("voice", "brazil")
@@ -37,7 +37,8 @@ async def on_message(message):
                 bot.vc = await message.author.voice.channel.connect()
             print(f'{message.author}: {message.content}')
             verifyUser(message.content)
-            engine.save_to_file(message.content, 'audio\\test.mp3')
+            removeID = removeUserID(message.content)
+            engine.save_to_file(removeID, 'audio\\test.mp3')
             engine.runAndWait()
             source = await discord.FFmpegOpusAudio.from_probe(executable='D:\\DEV\\Projetos\\BOT_Discord\\tools\\ffmpeg\\ffmpeg.exe', source='audio\\test.mp3')
             bot.vc.play(source)
