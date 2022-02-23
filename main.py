@@ -11,7 +11,7 @@ engine.setProperty("rate", 170)
 engine.runAndWait()
 
 AUTHOR = ['LK', 'Pseudao']
-CANAL = 'bot'
+CANAL = 'dev_teste'
 TOKEN = "OTM4Nzg1ODU4ODU1Nzk2NzY2.YfvWdg.34gNUwxBfwwA8IRsf0YwesolA-o"
 
 mutex = Lock()
@@ -40,7 +40,7 @@ async def on_message(message):
             verifyUser(message.content)
             engine.save_to_file(message.content, 'test.webm')
             engine.runAndWait()
-            source = await discord.FFmpegOpusAudio.from_probe(executable='D:\\DEV\\Projetos\\Webhook_Discord\\ffmpeg\\ffmpeg.exe', source='test.webm')
+            source = await discord.FFmpegOpusAudio.from_probe(executable='D:\\DEV\\Projetos\\BOT_Discord\\ffmpeg\\ffmpeg.exe', source='test.webm')
             bot.vc.play(source)
 
 

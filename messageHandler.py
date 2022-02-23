@@ -2,11 +2,6 @@
 # LK#9609: o lucas é lindo <@!270928429925269518>
 # SUBSTRING, SPLIT, REGEX, REPLACE
 # Extrai o ID e buscar o nome na API   await fetch_user(user_id)¶
-import discord
-
-TOKEN = "OTM4Nzg1ODU4ODU1Nzk2NzY2.YfvWdg.34gNUwxBfwwA8IRsf0YwesolA-o"
-disc = discord.Client().fetch_user
-print(disc)
 
 
 def main():
@@ -32,7 +27,7 @@ def removeUserID(texto):
         a = texto.split('<@!')
         b = a[1].split('>')
         id = b[0]
-        result = a[0] + 'Claudinho' + b[1]
+        result = a[0] + '@'+id + b[1]
         removeUserID(result)
     else:
         return texto
