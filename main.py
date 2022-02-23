@@ -1,9 +1,9 @@
+
 from discord.ext import commands
 import discord
 import pyttsx3
 from multiprocessing import Lock
-from messageHandler import verifyUser
-
+from tools import messageHandler
 
 engine = pyttsx3.init()
 engine.setProperty("voice", "brazil")
