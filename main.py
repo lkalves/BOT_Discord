@@ -1,9 +1,10 @@
 
+from click import command, pass_context
 from discord.ext import commands
 import discord
 import pyttsx3
 from multiprocessing import Lock
-from tools import messageHandler
+from tools.messageHandler import verifyUser
 
 engine = pyttsx3.init()
 engine.setProperty("voice", "brazil")
@@ -11,7 +12,7 @@ engine.setProperty("rate", 170)
 engine.runAndWait()
 
 AUTHOR = ['LK', 'Pseudao']
-CANAL = 'dev_teste'
+CANAL = 'bot'
 TOKEN = "OTM4Nzg1ODU4ODU1Nzk2NzY2.YfvWdg.34gNUwxBfwwA8IRsf0YwesolA-o"
 
 mutex = Lock()
@@ -38,9 +39,9 @@ async def on_message(message):
                 bot.vc = await message.author.voice.channel.connect()
             print(f'{message.author}: {message.content}')
             verifyUser(message.content)
-            engine.save_to_file(message.content, 'test.webm')
+            engine.save_to_file(message.content, 'audio\\test.mp3')
             engine.runAndWait()
-            source = await discord.FFmpegOpusAudio.from_probe(executable='D:\\DEV\\Projetos\\BOT_Discord\\ffmpeg\\ffmpeg.exe', source='test.webm')
+            source = await discord.FFmpegOpusAudio.from_probe(executable='D:\\DEV\\Projetos\\BOT_Discord\\tools\\ffmpeg\\ffmpeg.exe', source='audio\\test.mp3')
             bot.vc.play(source)
 
 

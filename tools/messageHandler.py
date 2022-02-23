@@ -7,7 +7,7 @@
 def main():
     texto = ['LK#9609: o lucas é lindo <@!270928429925269518> o rafao é feio demais <@!268198611941195776>',
              'o rafao é feio demais <@!268198611941195776>']  # 270928429925269518
-    verifyUser(texto[0])
+    # verifyUser(texto[0])
 
 # CRIAR UM METODO PARA VERIFICAR SE EXISTE UM ID DE USUARIO NA MENSAGEM
 
