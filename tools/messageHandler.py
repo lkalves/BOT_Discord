@@ -20,11 +20,13 @@ def removeUserID(texto):
         b = a[1].split('>')
         id = b[0]
         dicio = dict(nome_lista)
-        search = dicio.get(id, 'Não encontrado')
-        if search != 'Não encontrado':
+        search = dicio.get(id)
+
+        if search is not None:
             result = a[0] + '@'+search + b[1]
-        elif search == 'Não encontrado':
+        else:
             result = a[0] + '@desconhecido' + b[1]
+
         return removeUserID(result)
     else:
         return texto

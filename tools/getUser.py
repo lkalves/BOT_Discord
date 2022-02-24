@@ -1,10 +1,7 @@
-
 from discord.ext import commands
 import asyncio
 
 TOKEN = "OTM4Nzg1ODU4ODU1Nzk2NzY2.YfvWdg.34gNUwxBfwwA8IRsf0YwesolA-o"
-
-
 bot = commands.Bot("!")
 
 
