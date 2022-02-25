@@ -2,5 +2,4 @@
 audio/test.mp3
 tools/__pycache__/messageHandler.cpython-310.pyc
 *.pyc
-*.pyc
 *.mp3
