@@ -1,14 +1,9 @@
 from discord.ext import commands
 import discord
-import pyttsx3
 from multiprocessing import Lock
 from tools.messageHandler import verifyUser, removeUserID
 from tools.variaveis import token
-
-engine = pyttsx3.init()
-engine.setProperty("voice", "brazil")
-engine.setProperty("rate", 170)
-engine.runAndWait()
+import gtts
 
 AUTHOR = ['LK', 'Pseudao']
 CANAL = 'bot'
@@ -38,8 +33,8 @@ async def on_message(message):
             print(f'{message.author}: {message.content}')
             verifyUser(message.content)
             removeID = removeUserID(message.content)
-            engine.save_to_file(removeID, 'audio/test.mp3')
-            engine.runAndWait()
+            tts = gtts.gTTS(removeID, lang='pt', slow=False)
+            tts.save("audio/test.mp3")
             source = await discord.FFmpegOpusAudio.from_probe(
                 executable='tools/ffmpeg/ffmpeg.exe', source='audio/test.mp3'
             )
