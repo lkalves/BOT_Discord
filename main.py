@@ -5,6 +5,7 @@ from tools.messageHandler import verifyUser, removeUserID
 from tools.variaveis import token
 import gtts
 
+
 AUTHOR = ['LK', 'Pseudao']
 CANAL = 'bot'
 
@@ -36,7 +37,7 @@ async def on_message(message):
             tts = gtts.gTTS(removeID, lang='pt', slow=False)
             tts.save("audio/test.mp3")
             source = await discord.FFmpegOpusAudio.from_probe(
-                executable='tools/ffmpeg/ffmpeg.exe', source='audio/test.mp3'
+                'audio/test.mp3'
             )
             bot.vc.play(source)
 
