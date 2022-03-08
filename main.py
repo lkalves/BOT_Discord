@@ -1,4 +1,3 @@
-
 from click import pass_context
 from discord.ext import commands
 import discord
@@ -33,21 +32,17 @@ async def on_message(message):
         if (message.channel.name == CANAL and message.author.name in AUTHOR) or message.channel.name == 'dev_teste':
             if not is_connected(message.author.voice.channel):
                 bot.vc = await message.author.voice.channel.connect()
-
             if is_connected(message.author.voice.channel) and message.content.startswith('!dc'):
                 await bot.vc.disconnect()
-
             print(f'{message.author}: {message.content}')
             verifyUser(message.content)
             removeID = removeUserID(message.content)
             tts = gtts.gTTS(removeID, lang='pt', slow=False)
             tts.save("audio/test.mp3")
             source = await discord.FFmpegOpusAudio.from_probe(
-                executable='tools/ffmpeg/ffmpeg.exe', source='audio/test.mp3'
+                'audio/test.mp3'
             )
             bot.vc.play(source)
-            # import ipdb
-            # ipdb.sset_trace()
 
 
 def main():
