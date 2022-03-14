@@ -29,7 +29,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     with mutex:
-        if (message.channel.name == CANAL and message.author.name in AUTHOR) or message.channel.name == 'dev_teste':
+        if (message.channel.name == CANAL and message.author.name in AUTHOR) or message.channel.name == 'canal-do-alan':
             if not is_connected(message.author.voice.channel):
                 bot.vc = await message.author.voice.channel.connect()
             if is_connected(message.author.voice.channel) and message.content.startswith('!dc'):
