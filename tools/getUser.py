@@ -1,7 +1,7 @@
 from discord.ext import commands
 import asyncio
 
-TOKEN = "OTM4Nzg1ODU4ODU1Nzk2NzY2.YfvWdg.34gNUwxBfwwA8IRsf0YwesolA-o"
+TOKEN = "OTM4Nzg1ODU4ODU1Nzk2NzY2.YfvWdg.OlQEjxKBwcpAcrXRonLW15kZ_CY"
 bot = commands.Bot("!")
 
 
