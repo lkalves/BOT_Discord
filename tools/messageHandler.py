@@ -1,4 +1,4 @@
-from tools.variaveis import changeUser
+from tools.changeUser import changeUser
 
 
 def hasUserID(texto):

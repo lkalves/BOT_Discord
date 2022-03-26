@@ -4,3 +4,4 @@ tools/__pycache__/messageHandler.cpython-310.pyc
 *.pyc
 *.mp3
 *.mp3
+.env

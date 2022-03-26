@@ -1,13 +1,12 @@
+import dotenv
 from discord.ext import commands
 import discord
 from multiprocessing import Lock
 from tools.messageHandler import verifyUser, removeUserID
-from tools.variaveis import token
 import gtts
+import os
 
-
-AUTHOR = ['LK', 'Pseudao']
-CANAL = 'bot'
+dotenv.load_dotenv(dotenv.find_dotenv())
 
 mutex = Lock()
 bot = commands.Bot("!")
@@ -28,7 +27,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     with mutex:
-        if (message.channel.name == CANAL and message.author.name in AUTHOR) or message.channel.name == 'canal-do-alan':
+        if (message.channel.name == (os.getenv('CANAL')) and message.author.name in (os.getenv('AUTHOR'))) or message.channel.name == (os.getenv('CANAL_EXC')):
             if not is_connected(message.author.voice.channel):
                 bot.vc = await message.author.voice.channel.connect()
             if is_connected(message.author.voice.channel) and message.content.startswith('!dc'):
@@ -45,7 +44,7 @@ async def on_message(message):
 
 
 def main():
-    bot.run(token())
+    bot.run(os.environ['TOKEN'])
 
 
 if __name__ == "__main__":
