@@ -1,3 +1,4 @@
+from sys import executable
 import dotenv
 from discord.ext import commands
 import discord
@@ -34,25 +35,24 @@ async def on_message(message):
     author = message.author
 
     with mutex:
+        if author.voice is None:
+            await channel.send('Você não está conectado em um canal de voz')
+
         if (channel.name == CANAL and author.name in AUTHOR) or channel.name == CANALEXC:
-            if not is_connected(author.voice):
-                if author.voice is None:
-                    await channel.send('Você não está conectado em um canal de voz')
-                else:
-                    bot.vc = await author.voice.channel.connect()
+            if not is_connected(author.voice.channel):
+                bot.vc = await author.voice.channel.connect()
 
             if is_connected(author.voice.channel) and message.content.startswith('!dc'):
                 await bot.vc.disconnect()
 
             print(f'{author}: {message.content}')
-            verifyUser(message.content)
+            txt = message.content.lower()
+            verifyUser(txt)
             removeID = removeUserID(message.content)
 
             tts = gtts.gTTS(removeID, lang='pt', slow=False)
             tts.save("audio/test.mp3")
-            source = await discord.FFmpegOpusAudio.from_probe(
-                'audio/test.mp3'
-            )
+            source = await discord.FFmpegOpusAudio.from_probe('audio/test.mp3')
 
             bot.vc.play(source)
 
