@@ -5,3 +5,4 @@ tools/__pycache__/messageHandler.cpython-310.pyc
 *.mp3
 *.mp3
 .env
+.vscode/settings.json

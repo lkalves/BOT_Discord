@@ -2,12 +2,12 @@ from tools.changeUser import changeUser
 
 
 def hasUserID(texto):
-    return '<@!' in texto
+    return '<@' in texto
 
 
 def removeUserID(texto):
     if hasUserID(texto):
-        a = texto.split('<@!')
+        a = texto.split('<@')
         b = a[1].split('>')
         id = b[0]
         search = changeUser(id)
