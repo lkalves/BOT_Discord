@@ -5,6 +5,7 @@ import os
 import traceback
 import sys
 import platform
+import shutil
 from time import sleep
 from discord.ext import commands
 from datetime import datetime
@@ -22,6 +23,15 @@ CANALEXC = os.getenv('CANAL_EXC')
 async def remove_file(file_path):
     os.remove(file_path)
 
+async def delete_files(message):
+    if (os.path.isdir('audio')):
+        shutil.rmtree('audio')
+        await message.channel.send('Áudios removidos com sucesso!')
+        return
+    await message.channel.send('Não possui áudios a serem removidos!')
+    
+def create_folder():
+    os.mkdir('audio')
 
 def is_connected(channel):
     for voice_client in bot.voice_clients:
@@ -38,6 +48,7 @@ async def reproduce_audio(message):
 
     if author.voice is None:
         await channel.send('Você não está conectado em um canal de voz')
+        return
 
     if not is_connected(author.voice.channel):
         bot.vc = await author.voice.channel.connect()
@@ -52,12 +63,16 @@ async def reproduce_audio(message):
     try:
         aud = f"audio/{timestamp}.mp3"
         tts = gtts.gTTS(txt, lang='pt', slow=False)
+        
+        if not (os.path.isdir('audio')):
+            create_folder()
+        
         tts.save(aud)
+            
         if (platform.system() == 'Windows'):
             source = await discord.FFmpegOpusAudio.from_probe(source = f'audio/{timestamp}.mp3', executable = 'tools/ffmpeg/ffmpeg.exe')
         else:
             source = await discord.FFmpegOpusAudio.from_probe(f'audio/{timestamp}.mp3')
-        
         bot.vc.play(source)
         audio = MP3(f"audio/{timestamp}.mp3")
         sleep(audio.info.length)
@@ -77,6 +92,10 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     if (message.clean_content.startswith(('/', '#', '-', '!'))):
+        return
+    
+    if (message.clean_content.startswith('+deleteFiles')):
+        await delete_files(message)
         return
     
     if (message.channel.name == CANAL and message.author.name in AUTHOR) or message.channel.name == CANALEXC:
