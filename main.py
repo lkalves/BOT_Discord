@@ -4,6 +4,7 @@ import gtts
 import os
 import traceback
 import sys
+import platform
 from time import sleep
 from discord.ext import commands
 from datetime import datetime
@@ -41,7 +42,7 @@ async def reproduce_audio(message):
     if not is_connected(author.voice.channel):
         bot.vc = await author.voice.channel.connect()
 
-    if is_connected(author.voice.channel) and message.clean_content.startswith('!dc'):
+    if is_connected(author.voice.channel) and message.clean_content.startswith('+dc'):
         await bot.vc.disconnect()
         return
 
@@ -52,7 +53,11 @@ async def reproduce_audio(message):
         aud = f"audio/{timestamp}.mp3"
         tts = gtts.gTTS(txt, lang='pt', slow=False)
         tts.save(aud)
-        source = await discord.FFmpegOpusAudio.from_probe(f'audio/{timestamp}.mp3')
+        if (platform.system() == 'Windows'):
+            source = await discord.FFmpegOpusAudio.from_probe(source = f'audio/{timestamp}.mp3', executable = 'tools/ffmpeg/ffmpeg.exe')
+        else:
+            source = await discord.FFmpegOpusAudio.from_probe(f'audio/{timestamp}.mp3')
+        
         bot.vc.play(source)
         audio = MP3(f"audio/{timestamp}.mp3")
         sleep(audio.info.length)
@@ -71,6 +76,9 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+    if (message.clean_content.startswith(('/', '#', '-', '!'))):
+        return
+    
     if (message.channel.name == CANAL and message.author.name in AUTHOR) or message.channel.name == CANALEXC:
         print(f"Tem mensagem nova! Mensagem: {message.clean_content}")
         await reproduce_audio(message)
