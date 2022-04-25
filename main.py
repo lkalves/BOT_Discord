@@ -60,7 +60,6 @@ async def reproduce_audio(message):
         await bot.vc.disconnect()
         return
 
-    print(f'{author}: {message.clean_content}')
     txt = message.clean_content.lower()
 
     try:
@@ -102,7 +101,8 @@ async def on_message(message):
         return
 
     if (message.channel.name == CANAL and message.author.name in AUTHOR) or message.channel.name == CANALEXC:
-        print(f"Tem mensagem nova! Mensagem: {message.clean_content}")
+        print(
+            f"Tem mensagem nova de {message.author.name}!\nMensagem: {message.clean_content}\n")
         await reproduce_audio(message)
 
 
