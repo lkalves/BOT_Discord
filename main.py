@@ -55,10 +55,7 @@ async def reproduce_audio(message):
 
     if not is_connected(author.voice.channel):
         bot.vc = await author.voice.channel.connect()
-
-    if is_connected(author.voice.channel) and message.clean_content.startswith('+dc'):
-        await bot.vc.disconnect()
-        return
+        await message.channel.send('Para ter mais informações utilize o comando "+help"')
 
     txt = message.clean_content.lower()
 
@@ -93,17 +90,34 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-    if (message.clean_content.startswith(('/', '#', '-', '!'))):
-        return
+    if not message.author.name == 'Aloes Hawking BOT':
+        if (message.clean_content.startswith(('/', '#', '-', '!'))):
+            return
 
-    if (message.clean_content.startswith('+deleteFiles')):
-        await delete_files(message)
-        return
+        if is_connected(message.author.voice.channel) and message.clean_content.startswith('+dc'):
+            await bot.vc.disconnect()
+            return
 
-    if (message.channel.name == CANAL and message.author.name in AUTHOR) or message.channel.name == CANALEXC:
-        print(
-            f"Tem mensagem nova de {message.author.name}!\nMensagem: {message.clean_content}\n")
-        await reproduce_audio(message)
+        if (message.clean_content.startswith('+help')):
+            await message.channel.send('''
++removeFiles = Remove arquivos de audio salvos.
++dc = Desconecta o bot do canal de voz.
+            ''')
+            return
+
+        if (message.clean_content.startswith('+removeFiles')):
+            await delete_files(message)
+            return
+
+        if (message.clean_content.startswith(('+'))):
+            return
+
+        if (message.channel.name == CANAL and message.author.name in AUTHOR) or message.channel.name == CANALEXC:
+            print(
+                f"Tem mensagem nova de {message.author.name}!\nMensagem: {message.clean_content}\n")
+            await reproduce_audio(message)
+    else:
+        return
 
 
 def main():
