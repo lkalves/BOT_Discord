@@ -112,7 +112,7 @@ async def on_message(message):
         if (message.clean_content.startswith(('+'))):
             return
 
-        if (message.channel.name == CANAL and message.author.name in AUTHOR) or message.channel.name == CANALEXC:
+        if (message.channel.name in CANAL and message.author.name in AUTHOR) or message.channel.name == CANALEXC:
             print(
                 f"Tem mensagem nova de {message.author.name}!\nMensagem: {message.clean_content}\n")
             await reproduce_audio(message)
