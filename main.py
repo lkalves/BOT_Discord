@@ -1,11 +1,4 @@
-import dotenv
-import discord
-import gtts
-import os
-import traceback
-import sys
-import platform
-import shutil
+import dotenv, discord, gtts, os, traceback, sys, platform, shutil
 from time import sleep
 from discord.ext import commands
 from datetime import datetime
