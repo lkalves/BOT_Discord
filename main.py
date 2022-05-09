@@ -83,7 +83,7 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-    if not message.author.name == 'Aloes Hawking BOT':
+    if not message.author.bot == True:
         if (message.clean_content.startswith(('/', '#', '-', '!'))):
             return
 
