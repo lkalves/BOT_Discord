@@ -83,31 +83,38 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+    conteudo = message.clean_content
     if not message.author.bot == True:
-        if (message.clean_content.startswith(('/', '#', '-', '!'))):
+        if conteudo.startswith(('/', '#', '-', '!')):
             return
 
-        if is_connected(message.author.voice.channel) and message.clean_content.startswith('+dc'):
+        if is_connected(message.author.voice.channel) and conteudo.startswith('+dc'):
             await bot.vc.disconnect()
             return
 
-        if (message.clean_content.startswith('+help')):
+        if conteudo.startswith('+help'):
             await message.channel.send('''
-+removeFiles = Remove arquivos de audio salvos.
++removefiles = Remove arquivos de audio salvos.
 +dc = Desconecta o bot do canal de voz.
++video = Envia o video da Ju para alertar aquele amigo
             ''')
             return
 
-        if (message.clean_content.startswith('+removeFiles')):
+        if (conteudo.startswith('+video')):
+            await message.channel.send(
+                'Vou ter que te mandar um vídeo:\nhttps://www.youtube.com/watch?v=bmfMDJJo0u8'
+            )
+
+        if (conteudo.startswith('+removefiles')):
             await delete_files(message)
             return
 
-        if (message.clean_content.startswith(('+'))):
+        if (conteudo.startswith(('+'))):
             return
 
         if (message.channel.name in CANAL and message.author.name in AUTHOR) or message.channel.name == CANALEXC:
             print(
-                f"Tem mensagem nova de {message.author.name}!\nMensagem: {message.clean_content}\n")
+                f"Tem mensagem nova de {message.author.name}!\nMensagem: {conteudo}\n")
             await reproduce_audio(message)
     else:
         return
