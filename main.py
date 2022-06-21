@@ -96,14 +96,8 @@ async def on_message(message):
             await message.channel.send('''
 +removefiles = Remove arquivos de audio salvos.
 +dc = Desconecta o bot do canal de voz.
-+video = Envia o video da Ju para alertar aquele amigo
             ''')
             return
-
-        if (conteudo.startswith('+video')):
-            await message.channel.send(
-                'Vou ter que te mandar um vídeo:\nhttps://www.youtube.com/watch?v=bmfMDJJo0u8'
-            )
 
         if (conteudo.startswith('+removefiles')):
             await delete_files(message)
