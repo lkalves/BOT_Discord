@@ -1,7 +1,15 @@
-import dotenv, discord, gtts, os, traceback, sys, platform, shutil
-from time import sleep
-from discord.ext import commands
 from datetime import datetime
+from time import sleep
+
+import discord
+import dotenv
+import gtts
+import os
+import platform
+import shutil
+import sys
+import traceback
+from discord.ext import commands
 from mutagen.mp3 import MP3
 
 dotenv.load_dotenv(dotenv.find_dotenv())
@@ -10,7 +18,7 @@ bot = commands.Bot("!")
 
 CANAL = os.getenv('CANAL')
 AUTHOR = os.getenv('AUTHOR')
-CANALEXC = os.getenv('CANAL_EXC')
+CANAL_EXC = os.getenv('CANAL_EXC')
 
 
 async def remove_file(file_path):
@@ -18,7 +26,7 @@ async def remove_file(file_path):
 
 
 async def delete_files(message):
-    if (os.path.isdir('audio')):
+    if os.path.isdir('audio'):
         shutil.rmtree('audio')
         await message.channel.send('Áudios removidos com sucesso!')
         return
@@ -43,12 +51,14 @@ async def reproduce_audio(message):
     timestamp = datetime.timestamp(now)
 
     if author.voice is None:
-        await channel.send('Você não está conectado em um canal de voz')
+        await channel.send(
+            'Você não está conectado em um canal de voz')
         return
 
     if not is_connected(author.voice.channel):
         bot.vc = await author.voice.channel.connect()
-        await message.channel.send('Para ter mais informações utilize o comando "+help"')
+        await message.channel.send(
+            'Para ter mais informações utilize o comando "+help"')
 
     txt = message.clean_content.lower()
 
@@ -61,10 +71,13 @@ async def reproduce_audio(message):
 
         tts.save(aud)
 
-        if (platform.system() == 'Windows'):
-            source = await discord.FFmpegOpusAudio.from_probe(source=f'audio/{timestamp}.mp3', executable='tools/ffmpeg/ffmpeg.exe')
+        if platform.system() == 'Windows':
+            source = await discord.FFmpegOpusAudio.from_probe(
+                source=f'audio/{timestamp}.mp3',
+                executable='tools/ffmpeg/ffmpeg.exe')
         else:
-            source = await discord.FFmpegOpusAudio.from_probe(f'audio/{timestamp}.mp3')
+            source = await discord.FFmpegOpusAudio.from_probe(
+                f'audio/{timestamp}.mp3')
         bot.vc.play(source)
         audio = MP3(f"audio/{timestamp}.mp3")
         sleep(audio.info.length)
@@ -83,32 +96,32 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-    conteudo = message.clean_content
-    if not message.author.bot == True:
-        if conteudo.startswith(('/', '#', '-', '!')):
+    content = message.clean_content
+    if message.author.bot is not True:
+        if content.startswith(('/', '#', '-', '!')):
             return
 
-        if is_connected(message.author.voice.channel) and conteudo.startswith('+dc'):
+        if is_connected(message.author.voice.channel) and content.startswith('+dc'):
             await bot.vc.disconnect()
             return
 
-        if conteudo.startswith('+help'):
+        if content.startswith('+help'):
             await message.channel.send('''
 +removefiles = Remove arquivos de audio salvos.
 +dc = Desconecta o bot do canal de voz.
             ''')
             return
 
-        if (conteudo.startswith('+removefiles')):
+        if content.startswith('+removefiles'):
             await delete_files(message)
             return
 
-        if (conteudo.startswith(('+'))):
+        if content.startswith('+'):
             return
 
-        if (message.channel.name in CANAL and message.author.name in AUTHOR) or message.channel.name == CANALEXC:
+        if (message.channel.name in CANAL and message.author.name in AUTHOR) or message.channel.name == CANAL_EXC:
             print(
-                f"Tem mensagem nova de {message.author.name}!\nMensagem: {conteudo}\n")
+                f"Tem mensagem nova de {message.author.name}!\nMensagem: {content}\n")
             await reproduce_audio(message)
     else:
         return
