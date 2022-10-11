@@ -14,7 +14,7 @@ from mutagen.mp3 import MP3
 
 dotenv.load_dotenv(dotenv.find_dotenv())
 
-bot = commands.Bot("!")
+bot = commands.Bot("!", intents=discord.Intents.default())
 
 CANAL = os.getenv('CANAL')
 AUTHOR = os.getenv('AUTHOR')
