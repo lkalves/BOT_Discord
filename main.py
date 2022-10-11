@@ -14,7 +14,7 @@ from mutagen.mp3 import MP3
 
 dotenv.load_dotenv(dotenv.find_dotenv())
 
-bot = commands.Bot("!")
+bot = commands.Bot("!", intents=discord.Intents.default())
 
 CANAL = os.getenv('CANAL')
 AUTHOR = os.getenv('AUTHOR')
@@ -51,12 +51,14 @@ async def reproduce_audio(message):
     timestamp = datetime.timestamp(now)
 
     if author.voice is None:
-        await channel.send('Você não está conectado em um canal de voz')
+        await channel.send(
+            'Você não está conectado em um canal de voz')
         return
 
     if not is_connected(author.voice.channel):
         bot.vc = await author.voice.channel.connect()
-        await message.channel.send('Para ter mais informações utilize o comando "+help"')
+        await message.channel.send(
+            'Para ter mais informações utilize o comando "+help"')
 
     txt = message.clean_content.lower()
 
@@ -117,10 +119,9 @@ async def on_message(message):
         if content.startswith('+'):
             return
 
-        if (message.channel.name in CANAL and message.author.name in AUTHOR) \
-                or message.channel.name == CANAL_EXC:
-            print(f"Tem mensagem nova de {message.author.name}!\n"
-                  f"Mensagem: {content}\n")
+        if (message.channel.name in CANAL and message.author.name in AUTHOR) or message.channel.name == CANAL_EXC:
+            print(
+                f"Tem mensagem nova de {message.author.name}!\nMensagem: {content}\n")
             await reproduce_audio(message)
     else:
         return
