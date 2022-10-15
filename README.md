@@ -17,5 +17,5 @@
 
 
 ## Rodando o BOT localmente:
-### Abra a pasta do projeto e no terminal execute o seguinte comando: 
-### `behave .\integrations\features\ `
+### Abra a pasta do projeto e no terminal execute o seguinte arquivo: 
+### `python main.py`
