@@ -1,20 +1,20 @@
+import os
+import platform
+import shutil
+import sys
+import traceback
 from datetime import datetime
 from time import sleep
 
 import discord
 import dotenv
 import gtts
-import os
-import platform
-import shutil
-import sys
-import traceback
 from discord.ext import commands
 from mutagen.mp3 import MP3
 
 dotenv.load_dotenv(dotenv.find_dotenv())
 
-bot = commands.Bot("!", intents=discord.Intents.default())
+bot = commands.Bot("!", intents=discord.Intents().all())
 
 CANAL = os.getenv('CANAL')
 AUTHOR = os.getenv('AUTHOR')
@@ -97,7 +97,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     content = message.clean_content
-    if message.author.bot is not True:
+    if message.author.bot is False:
         if content.startswith(('/', '#', '-', '!')):
             return
 
