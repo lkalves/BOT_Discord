@@ -12,13 +12,14 @@ import gtts
 from discord.ext import commands
 from mutagen.mp3 import MP3
 
-dotenv.load_dotenv(dotenv.find_dotenv())
+# dotenv.load_dotenv(dotenv.find_dotenv())
+var_env = dotenv.get_variables('D:\DEV\Projetos\BOT_Discord\.env')
 
 bot = commands.Bot("!", intents=discord.Intents().all())
 
-CANAL = os.getenv('CANAL')
-AUTHOR = os.getenv('AUTHOR')
-CANAL_EXC = os.getenv('CANAL_EXC')
+CANAL =var_env['CANAL']
+AUTHOR = var_env['AUTHOR']
+CANAL_EXC = var_env['CANAL_EXC']
 
 
 async def remove_file(file_path):
@@ -45,6 +46,11 @@ def is_connected(channel):
 
 
 async def reproduce_audio(message):
+    '''
+    Essa função é responsavél por validar se o user está conectado ou não no canal de voz,
+    também é responsavél por enviar instruções no canal de texto e por fim ele também faz
+    a reprodução da mensagem em formato de audio.
+    '''
     channel = message.channel
     author = message.author
     now = datetime.now()
@@ -96,6 +102,10 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+    """
+    :param message: responsavel por trazer as informações do Discord de usuario e mensagem
+    :return: reproduçao do audio que é enviado para o discord em forma de mp3
+    """
     content = message.clean_content
     if message.author.bot is False:
         if content.startswith(('/', '#', '-', '!')):
@@ -128,7 +138,7 @@ async def on_message(message):
 
 
 def main():
-    bot.run(os.getenv('TOKEN'))
+    bot.run(var_env['TOKEN'])
 
 
 if __name__ == "__main__":
